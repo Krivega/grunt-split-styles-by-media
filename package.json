@@ -1,0 +1,31 @@
+{
+  "name": "grunt-split-styles-by-media",
+  "description": "Split a CSS file based on media",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Krivega/grunt-split-styles-by-media",
+  "author": {
+    "name": "Krivega Dmitriy",
+    "email": "mr.krivega@gmail.com",
+    "url": "http://krivega.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Krivega/grunt-split-styles-by-media.git"
+  },
+  "licenses": [{
+    "type": "MIT",
+    "url": "/blob/master/LICENSE-MIT"
+  }],
+  "engines": {
+    "node": ">= 6.0.0"
+  },
+  "keywords": [
+    "gruntplugin",
+    "css",
+    "postprocessor",
+    "extract"
+  ],
+  "dependencies": {
+    "postcss": "^6.0.6"
+  }
+}
