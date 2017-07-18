@@ -10,10 +10,11 @@ const postcss = require('postcss');
 module.exports = function(grunt) {
   grunt.registerMultiTask('split_styles_by_media', 'Split a CSS file based on media.', function() {
     // Merge task-specific and/or target-specific options with these defaults.
-    const { remove, output, publicPath } = this.options({
+    const { remove, output, publicPath, assetsPretty } = this.options({
       remove: true, // Should we strip the matched rules from the src style sheet?
       output: false, // output file 'false' by default,
-      publicPath: false // public path for assets.json
+      publicPath: false, // public path for assets.json,
+      assetsPretty: false
     });
 
     const mediaCSS = {};
@@ -71,6 +72,7 @@ module.exports = function(grunt) {
       // Write the newly split file.
       if (output) {
         let i = 0;
+        const assetsSpace = assetsPretty ? 2 : 0;
 
         for (const mediaCSSItem in mediaCSS) {
           const fileName = `${i}.css`;
@@ -87,7 +89,7 @@ module.exports = function(grunt) {
           i++;
         }
 
-        grunt.file.write(`${output}assets.json`, JSON.stringify(assets));
+        grunt.file.write(`${output}assets.json`, JSON.stringify(assets, undefined, assetsSpace));
       }
 
       // Write the destination file
