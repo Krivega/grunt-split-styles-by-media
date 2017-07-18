@@ -21,19 +21,20 @@ module.exports = function(grunt) {
 
     // Our postCSS processor
     const processor = postcss(function(css) {
-      css.eachAtRule(function(atRule) {
+      css.walkAtRules(function(rule) {
 
-        if (atRule.name === 'media' && !mediaCSS[atRule.params]) {
+        if (rule.name === 'media' && !mediaCSS[rule.params]) {
           const newCSS = postcss.root();
 
-          if (remove) {
-            atRule.removeSelf();
-          }
-          atRule.eachRule(function(rule) {
+          rule.walkRules(function(rule) {
             newCSS.append(rule);
           });
 
-          mediaCSS[atRule.params] = newCSS;
+          mediaCSS[rule.params] = newCSS;
+
+          if (remove) {
+            rule.remove();
+          }
         }
       });
     });
