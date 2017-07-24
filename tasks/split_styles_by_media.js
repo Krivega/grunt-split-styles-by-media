@@ -10,7 +10,14 @@ const postcss = require('postcss');
 module.exports = function(grunt) {
   grunt.registerMultiTask('split_styles_by_media', 'Split a CSS file based on media.', function() {
     // Merge task-specific and/or target-specific options with these defaults.
-    const { remove, output, publicPath, ignoredMedia = [], assetsPretty } = this.options({
+    const {
+      remove,
+      output,
+      publicPath,
+      ignoredMedia = [],
+      separationThreshold = 0,
+      assetsPretty
+    } = this.options({
       remove: true, // Should we strip the matched rules from the src style sheet?
       output: false, // output file 'false' by default,
       publicPath: false, // public path for assets.json,
@@ -35,6 +42,10 @@ module.exports = function(grunt) {
           rule.walkRules(function(rule) {
             newCSS.append(rule);
           });
+
+          if (separationThreshold && newCSS.toString().length < separationThreshold) {
+            return;
+          }
 
           mediaCSS[rule.params] = newCSS;
 
